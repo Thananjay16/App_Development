@@ -1,0 +1,55 @@
+/* Full viewport height for the login page */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #ffdfd6, #f8f4e1); /* Soft gradient background */
+}
+
+/* Container to center the login card */
+.login-container {
+  width: 100%;
+  max-width: 450px; /* Adjusted width for better appearance */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Style for the login card */
+.login-card {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff; /* White background for the card */
+}
+
+/* Form styling for spacing and alignment */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enhanced styling for text fields */
+.login-input {
+  margin-bottom: 16px;
+}
+
+/* Button styling for a modern look */
+.login-button {
+  margin-top: 16px;
+}
+
+/* Message styling */
+.login-message {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #555; /* Subtle color for the message */
+}
+
+/* Styling for the sign-up link */
+.signup-link {
+  color: #007bff; /* Primary color for the sign-up link */
+  cursor: pointer;
+  font-weight: bold;
+}

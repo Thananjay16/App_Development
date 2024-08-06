@@ -1,0 +1,152 @@
+/* Home.css */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+.hero-bg {
+  background-color: #fff8f3;
+  padding: 50px 20px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-img img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  color: #694F8E;
+  margin-bottom: 20px;
+}
+
+.dashnavlol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashnavlol button {
+  margin: 10px 0;
+}
+
+.feature {
+  background-color: #ffffff;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.featlol {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+}
+
+.content-1 {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+.content-1 h1 {
+  color: #694F8E;
+  margin-bottom: 20px;
+}
+
+.content-1 h5 {
+  color: #555555;
+}
+
+.content-img img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+.topcomp {
+  background-color: #f4f6f8;
+  padding: 50px 20px;
+}
+
+.topcompanies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topcompheading h3 {
+  font-size: 24px;
+  color: #694F8E;
+  margin-bottom: 10px;
+}
+
+.topcompline-1, .topcompline-2 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.topcompline-1 img, .topcompline-2 img {
+  max-width: 120px;
+  margin: 10px;
+}
+
+.review {
+  background-color: #ffffff;
+  padding: 50px 20px;
+}
+
+.userreview {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.reviewtitle {
+  font-size: 24px;
+  color: #694F8E;
+  margin-bottom: 20px;
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.review-img img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.reviewcontent {
+  max-width: 600px;
+}
+
+.reviewcontent h6 {
+  font-size: 18px;
+  color: #694F8E;
+}
+
+.reviewcontent p {
+  color: #555555;
+}

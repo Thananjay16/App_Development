@@ -1,0 +1,87 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9f9f9; /* Light background for a clean look */
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  text-align: center; /* Center-align text */
+}
+
+.about-image-container {
+  flex: 1;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 500px; /* Control the max width of the image */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.about-text {
+  flex: 1.5;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-text h1 {
+  font-size: 2.8rem; /* Larger font size for the heading */
+  font-weight: 700; /* Bold heading */
+  color: #333; /* Dark color for high contrast */
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.about-text p {
+  font-size: 1.2rem;
+  color: #555; /* Slightly lighter text color for readability */
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center; /* Center the social icons */
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.social-icons a {
+  color: #555; /* Default color for icons */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #007bff; /* Primary color for hover effect */
+  transform: scale(1.1); /* Slight scale effect on hover */
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center; /* Center text for smaller screens */
+  }
+
+  .about-image-container {
+    margin-bottom: 20px;
+  }
+
+  .about-image {
+    max-width: 80%;
+  }
+}

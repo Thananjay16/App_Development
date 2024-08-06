@@ -1,0 +1,61 @@
+.contact-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Slightly different light background color */
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px; /* Increased padding for better spacing */
+  flex: 1;
+}
+
+.contact-form-container {
+  max-width: 500px; /* Slightly narrower for a different look */
+  width: 100%;
+  background-color: #ffffff;
+  padding: 40px; /* Increased padding inside the form */
+  border-radius: 12px; /* Slightly more rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow for a more pronounced effect */
+}
+
+.contact-heading {
+  font-size: 1.8rem; /* Slightly smaller heading */
+  font-weight: 500; /* Medium weight for a softer look */
+  color: #444; /* Darker shade for text */
+  margin-bottom: 20px;
+}
+
+.contact-description {
+  font-size: 1.1rem; /* Slightly larger description text */
+  color: #777; /* Lighter shade for description text */
+  margin-bottom: 25px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form .MuiTextField-root {
+  margin-bottom: 20px; /* Increased margin for spacing between fields */
+}
+
+.contact-submit-button {
+  font-size: 1.1rem; /* Slightly larger button text */
+  font-weight: 500; /* Medium weight for button text */
+  padding: 12px;
+  background-color: #28a745; /* Green button for a different primary color */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px; /* Rounded corners for the button */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-submit-button:hover {
+  background-color: #218838; /* Darker green for hover effect */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}

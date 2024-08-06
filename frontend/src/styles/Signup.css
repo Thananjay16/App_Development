@@ -1,0 +1,55 @@
+/* Full viewport height for the signup page */
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #ffdfd6, #f8f4e1); /* Soft gradient background */
+}
+
+/* Container to center the signup card */
+.signup-container {
+  width: 100%;
+  max-width: 500px; /* Adjusted width for better appearance */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Style for the signup card */
+.signup-card {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff; /* White background for the card */
+}
+
+/* Form styling for spacing and alignment */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enhanced styling for text fields */
+.signup-input {
+  margin-bottom: 16px;
+}
+
+/* Button styling for a modern look */
+.signup-button {
+  margin-top: 16px;
+}
+
+/* Message styling */
+.signup-message {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #555; /* Subtle color for the message */
+}
+
+/* Styling for the login link */
+.login-link {
+  color: #007bff; /* Primary color for the login link */
+  cursor: pointer;
+  font-weight: bold;
+}
