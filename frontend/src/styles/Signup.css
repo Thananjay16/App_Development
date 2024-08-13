@@ -10,7 +10,7 @@
 /* Container to center the signup card */
 .signup-container {
   width: 100%;
-  max-width: 500px; /* Adjusted width for better appearance */
+  max-width: 450px; /* Adjusted width for better appearance */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -21,7 +21,8 @@
   margin: 0 auto;
   padding: 20px;
   border-radius: 10px;
-  background-color: #fff; /* White background for the card */
+  background-color: #ffffff; /* White background for the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
 }
 
 /* Form styling for spacing and alignment */
@@ -38,6 +39,17 @@
 /* Button styling for a modern look */
 .signup-button {
   margin-top: 16px;
+  padding: 12px;
+  font-size: 1rem; /* Consistent font size */
+  border-radius: 6px; /* Rounded corners for a modern look */
+  background-color: #007bff; /* Primary color for the button */
+  color: #ffffff; /* White text color */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
 /* Message styling */
@@ -48,8 +60,55 @@
 }
 
 /* Styling for the login link */
-.login-link {
+.signup-link {
   color: #007bff; /* Primary color for the login link */
   cursor: pointer;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline; /* Underline on hover */
+}.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.signup-input {
+  margin-bottom: 16px;
+}
+
+.signup-button {
+  margin-top: 16px;
+}
+
+.signup-message {
+  margin-top: 16px;
+}
+
+.login-link {
+  color: blue;
+  cursor: pointer;
+}
+
+
+/* Error message styling */
+.signup-error {
+  margin-top: 16px;
+  color: #d32f2f; /* Red color for error messages */
 }

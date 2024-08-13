@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 // Sample data for demonstration
 const sampleUsers = [
-  { id: 1, name: 'Mathan' },
+  { id: 1, name: 'mathan' },
   { id: 2, name: 'Ragunath' },
   // Add more users if needed
 ];

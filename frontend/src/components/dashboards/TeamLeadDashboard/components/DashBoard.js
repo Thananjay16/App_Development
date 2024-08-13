@@ -1,140 +1,206 @@
-
-import React from 'react';
-import { Box, Typography, Card, CardContent, Grid, Divider } from '@mui/material';
-import { styled } from '@mui/system';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Box, Typography, Card, CardContent, Grid, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Divider, Paper, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import TeamLeadSidePanel from '../TeamLeadSidePanel';
 
-
-const tasksRemaining = 5;
-const currentProject = "Project Alpha";
-const recentChanges = [
-  { id: 1, change: 'Updated task 3', date: '2024-07-25' },
-  { id: 2, change: 'Completed task 5', date: '2024-07-24' },
-  { id: 3, change: 'Added new task 7', date: '2024-07-23' },
-];
-
-const kanbanStats = {
-  toDo: 3,
-  inProgress: 1,
-  done: 1,
-};
-
-
-const pieData = [
-  { name: 'To Do', value: kanbanStats.toDo },
-  { name: 'In Progress', value: kanbanStats.inProgress },
-  { name: 'Completed', value: kanbanStats.done },
-];
-
-
-const COLORS = ['#FF9999', '#66B2FF', '#99FF99'];
-
-const StyledCard = styled(Card)({
-  borderRadius: '12px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  backgroundColor: '#ffffff',
-});
-
-const CardHeader = styled(Typography)({
-  fontWeight: 'bold',
-  color: '#333',
-});
-
-const CardValue = styled(Typography)({
-  fontWeight: '600',
-  color: '#00796b',
-  fontSize: '2rem',
-});
-
-const RecentActivity = styled(Box)({
-  padding: '16px',
-  backgroundColor: '#f5f5f5',
-  borderRadius: '8px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-});
-
-const ActivityItem = styled(Box)({
-  marginBottom: '8px',
-  padding: '8px',
-  borderBottom: '1px solid #e0e0e0',
-});
-
 const Dashboard = () => {
+  const [team, setTeam] = useState(null);
+  const [schedule, setSchedule] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [newRequest, setNewRequest] = useState({ date: '', time: '', reason: '' });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const leadId = JSON.parse(localStorage.getItem('id'));
+        if (!leadId) {
+          console.error('No leadId found in localStorage.');
+          return;
+        }
+
+        const teamResponse = await axios.get(`http://localhost:8080/api/teams/by-lead/${leadId}`);
+        setTeam(teamResponse.data[0]);
+
+        const scheduleResponse = await axios.get(`http://localhost:8080/api/product_manager/schedule/schedule/${leadId}`);
+        setSchedule(scheduleResponse.data);
+
+        const requestsResponse = await axios.get(`http://localhost:8080/api/timeoffrequests/by-team-lead/${leadId}`);
+        setRequests(requestsResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleRequestChange = (e) => {
+    const { name, value } = e.target;
+    setNewRequest({ ...newRequest, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const teamLeadId = JSON.parse(localStorage.getItem('id'));
+      const teamLeadName = localStorage.getItem('username');
+      const dateTime = `${newRequest.date}T${newRequest.time}`; // Combine date and time
+
+      const payload = {
+        ...newRequest,
+        teamLeadId,
+        teamLeadName,
+        status: 'Pending',
+        requestDate: dateTime,
+      };
+
+      await axios.post('http://localhost:8080/api/timeoffrequests', payload);
+
+      const response = await axios.get(`http://localhost:8080/api/timeoffrequests/by-team-lead/${teamLeadId}`);
+      setRequests(response.data);
+
+      setOpen(false);
+      setNewRequest({ date: '', time: '', reason: '' });
+    } catch (error) {
+      console.error('Error submitting time off request:', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/timeoffrequests/${id}`);
+      const leadId = JSON.parse(localStorage.getItem('id'));
+      const response = await axios.get(`http://localhost:8080/api/timeoffrequests/by-team-lead/${leadId}`);
+      setRequests(response.data);
+    } catch (error) {
+      console.error('Error deleting time off request:', error);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
-      <TeamLeadSidePanel />
+      <TeamLeadSidePanel sx={{ flexShrink: 0, width: 250 }} />
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Typography variant="h4" component="h2" sx={{ mb: 4 }}>
           Team Lead Dashboard
         </Typography>
+
+        {/* Display team details */}
+        {team && (
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+              Team Details
+            </Typography>
+            <Card sx={{ mb: 2, p: 2 }}>
+              <CardContent>
+                <Typography variant="h6">{`Team Name: ${team.name}`}</Typography>
+                <Typography variant="body2" sx={{ mb: 1 }}>Project: {team.project.name}</Typography>
+                <Typography variant="body2" sx={{ mb: 1 }}>Description: {team.project.description}</Typography>
+                <Typography variant="body2" sx={{ mb: 1 }}>Lead Username: {team.leadUsername}</Typography>
+                <Typography variant="body2">Members: {team.memberUsernames.join(', ')}</Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        )}
+
+        {/* Display team lead's schedule */}
+        <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
+          My Schedule
+        </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <StyledCard>
-              <CardContent>
-                <CardHeader variant="h6">Tasks Remaining</CardHeader>
-                <CardValue variant="h4">{tasksRemaining}</CardValue>
-              </CardContent>
-            </StyledCard>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <StyledCard>
-              <CardContent>
-                <CardHeader variant="h6">Current Project</CardHeader>
-                <CardValue variant="h4">{currentProject}</CardValue>
-              </CardContent>
-            </StyledCard>
-          </Grid>
+          {schedule.map((shift) => (
+            <Grid item xs={12} sm={6} md={4} key={shift.id}>
+              <Card sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="h6">{`Scheduled Time: ${new Date(shift.scheduleDateTime).toLocaleString()}`}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
 
-        <Grid container spacing={3} sx={{ mt: 4 }}>
-          <Grid item xs={12} md={6}>
-            <StyledCard>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>Task Distribution</Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      dataKey="value"
-                      outerRadius={120}
-                      fill="#8884d8"
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </StyledCard>
-          </Grid>
+        {/* Time Off Requests Section */}
+        <Typography variant="h5" component="h3" sx={{ mt: 4, mb: 2 }}>
+          Time Off Requests
+        </Typography>
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          Request Time Off
+        </Button>
+        <Divider sx={{ my: 2 }} />
+        {requests.length > 0 ? (
+          requests.map((request) => (
+            <Paper key={request.id} sx={{ mb: 2, p: 2, position: 'relative' }}>
+              <Typography variant="h6">{new Date(request.requestDate).toLocaleDateString()}</Typography>
+              <Typography variant="body1">{request.reason}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                Status: {request.status}
+              </Typography>
+              <IconButton
+                sx={{ position: 'absolute', top: 8, right: 8 }}
+                color="error"
+                onClick={() => handleDelete(request.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Paper>
+          ))
+        ) : (
+          <Typography variant="body1">No time off requests found.</Typography>
+        )}
 
-          <Grid item xs={12} md={6}>
-            <StyledCard>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>Recent Changes</Typography>
-                <RecentActivity>
-                  {recentChanges.map(change => (
-                    <ActivityItem key={change.id}>
-                      <Typography variant="body1">{change.change}</Typography>
-                      <Typography variant="caption" color="textSecondary">{change.date}</Typography>
-                    </ActivityItem>
-                  ))}
-                </RecentActivity>
-              </CardContent>
-            </StyledCard>
-          </Grid>
-        </Grid>
-
-        <StyledCard sx={{ mt: 4, p: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            Calendar
-          </Typography>
-          <Calendar />
-        </StyledCard>
+        {/* Time Off Request Dialog */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Request Time Off</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              name="date"
+              label="Date"
+              type="date"
+              fullWidth
+              value={newRequest.date}
+              onChange={handleRequestChange}
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              margin="dense"
+              name="time"
+              label="Time"
+              type="time"
+              fullWidth
+              value={newRequest.time}
+              onChange={handleRequestChange}
+              InputLabelProps={{ shrink: true }}
+            />
+            <TextField
+              margin="dense"
+              name="reason"
+              label="Reason"
+              type="text"
+              fullWidth
+              value={newRequest.reason}
+              onChange={handleRequestChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSubmit} color="primary">
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Box>
   );

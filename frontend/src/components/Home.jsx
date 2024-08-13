@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Button, Box } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
-import illustration from '../assets/illu-4.png';
+import illustration from '../assets/illu-4.png'; 
 import illu3 from '../assets/illu-7.png';
 import logo1 from '../assets/chat-gpt.png';
 import logo2 from '../assets/logo2.png';
@@ -22,10 +22,12 @@ import Rev3 from '../assets/rev-3.jpg';
 import Rev4 from '../assets/rev-4.jpg';
 import Rev5 from '../assets/rev-5.jpg';
 import Rev6 from '../assets/rev-6.jpg';
-import '../styles/Home.css';
+import '../styles/Home.css'; 
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Rating from '@mui/material/Rating';
+import HomeFeature from './HomeFeature';
+//import HomeFeature2 from './HomeFeature2';
 
 const Home = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -52,7 +54,7 @@ const Home = ({ user, onLogout }) => {
           navigate('/');
       }
     } else {
-      navigate('/login');
+      navigate('/login');  
     }
   };
 
@@ -106,7 +108,9 @@ const Home = ({ user, onLogout }) => {
                 <img src={illustration} alt="Illustration" />
               </div>
               <div className="hero-content">
-                <h1>Effortless Staff Scheduling with <b>Zoo Tech</b></h1>
+                <Typography variant="h1">
+                  Effortless Staff Scheduling with <b>ZooTech</b>
+                </Typography>
                 <Box sx={{ textAlign: 'center', mt: 2 }}>
                   <Typography variant="h4" gutterBottom>
                     Welcome {user ? user.role : 'Guest'}
@@ -131,18 +135,14 @@ const Home = ({ user, onLogout }) => {
                     </>
                   ) : (
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
                       href="/login"
                       sx={{
                         mt: 2,
+                        padding: '10px 20px',
+                        fontSize: '16px',
                         borderRadius: '8px',
-                        borderColor: '#007bff',
-                        color: '#007bff',
-                        '&:hover': {
-                          borderColor: '#0056b3',
-                          backgroundColor: '#e7f0ff',
-                        },
                       }}
                     >
                       Login
@@ -157,13 +157,13 @@ const Home = ({ user, onLogout }) => {
               <div className="content-1">
                 <div className="line">.</div><br />
                 <div className="line-2">.</div>
-                <h1 style={{ color: "white" }}>Manage your team's schedules efficiently and seamlessly.</h1>
+                <Typography variant="h2" style={{color:"white"}}>Manage your team's schedules efficiently and seamlessly.</Typography>
                 <div className="contlist">
-                  <h5>
+                  <Typography variant="h5">
                     "Save time with our automated scheduling algorithms that ensure optimal shift distribution."<br />
                     "Receive instant updates and notifications about schedule changes."<br />
                     "Facilitate seamless communication between staff members with built-in messaging."<br />
-                  </h5>
+                  </Typography>
                 </div>
                 <div className="line-2">.</div><br />
                 <div className="line">.</div>
@@ -176,7 +176,7 @@ const Home = ({ user, onLogout }) => {
           <div className="topcomp">
             <div className="topcompanies">
               <div className="topcompheading">
-                <h3>Our Clients</h3>
+                <Typography variant="h3">Our Clients</Typography>
                 <div className="line-3">.</div>
                 <div className="line-4">.</div>
               </div>
@@ -198,11 +198,12 @@ const Home = ({ user, onLogout }) => {
               <img src={logo12} alt="Logo 12" />
             </div>
           </div>
+          <HomeFeature />
           <div className="review">
             <div className="userreview">
-              <div className="reviewtitle">
+              <Typography variant="h4" className="reviewtitle">
                 Customer Reviews
-              </div>
+              </Typography>
               <Carousel>
                 {reviews.map((item, i) => (
                   <Box key={i} className="review-item" sx={{ p: 2, display: 'flex', alignItems: 'center' }}>

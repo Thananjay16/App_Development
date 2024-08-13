@@ -11,7 +11,7 @@ import EmployeeDashboard from './components/dashboards/EmployeeDashboard/Employe
 // import HRDashboard from './components/dashboards/HRDashboard/HRDashboard';
 import TeamLeadDashboard from './components/dashboards/TeamLeadDashboard/TeamLeadDashboard';
 import ProductManagerDashboard from './components/dashboards/ProductManagerDashboard/ProductManagerDashboard';
-
+import Profile from './components/dashboards/AdminDashboard/components/Profile';
 const App = () => {
   const [user, setUser] = useState(null);
 
@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/home" element={<Home user={user} onLogout={handleLogout} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
