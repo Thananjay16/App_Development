@@ -6,6 +6,7 @@ import com.example.backendlol.backend.model.User;
 import com.example.backendlol.backend.service.JwtService;
 import com.example.backendlol.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +30,34 @@ public class AuthController {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
-
+    // @PostMapping("/login")
+    // public ResponseEntity<?> loginUser(@RequestBody User user) {
+    //     Optional<User> optionalUser = userService.findByUsername(user.getUsername());
+    //     if (optionalUser.isPresent() && userService.checkPassword(optionalUser.get(), user.getPassword())) {
+    //         String token = jwtService.generateToken(user.getUsername());
+    //         Map<String, Object> response = new HashMap<>();
+         
+    //         return ResponseEntity.ok(optionalUser.get());
+    //     }
+    //     return ResponseEntity.badRequest().body("Invalid email or password");
+    // }
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        Optional<User> optionalUser = userService.findByUsername(loginRequest.getUsername());
-        if (optionalUser.isPresent() && userService.checkPassword(optionalUser.get(), loginRequest.getPassword())) {
-            String token = jwtService.generateToken(loginRequest.getUsername());
-            return ResponseEntity.ok(Collections.singletonMap("token", token));
-        }
-        return ResponseEntity.badRequest().body("Invalid username or password");
+public ResponseEntity<?> loginUser(@RequestBody User user) {
+    Optional<User> optionalUser = userService.findByUsername(user.getUsername());
+    if (optionalUser.isPresent() && userService.checkPassword(optionalUser.get(), user.getPassword())) {
+        String token = jwtService.generateToken(user.getUsername());
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", optionalUser.get());
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
+    return ResponseEntity.badRequest().body("Invalid username or password");
+}
+
+
+    
+        
+    
 
     @GetMapping("/profile/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
@@ -46,15 +65,22 @@ public class AuthController {
         return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
-            User updatedUser = userService.updateUser(user);
+            User updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+
+    
+
+
 
     @PostMapping("/verify")
 public ResponseEntity<?> verifyToken(@RequestBody TokenRequest tokenRequest) {

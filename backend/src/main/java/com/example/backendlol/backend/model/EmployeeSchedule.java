@@ -17,9 +17,21 @@ public class EmployeeSchedule {
     @Column(nullable = false)
     private String employeeUsername;
 
-    @Column(nullable = false)
+    @Column(name = "schedule_date_time", nullable = false)
     private LocalDateTime scheduleDateTime;
 
+    // Default constructor
+    public EmployeeSchedule() {
+    }
+
+    // Parameterized constructor
+    public EmployeeSchedule(Long employeeId, String employeeUsername, LocalDateTime scheduleDateTime) {
+        this.employeeId = employeeId;
+        this.employeeUsername = employeeUsername;
+        this.scheduleDateTime = scheduleDateTime;
+    }
+
+    // Getters and setters
     public Long getId() {
         return id;
     }

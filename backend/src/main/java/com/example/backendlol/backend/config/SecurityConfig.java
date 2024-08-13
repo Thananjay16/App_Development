@@ -19,16 +19,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-   .csrf(csrf -> csrf.disable())
-   .authorizeHttpRequests(authz -> authz
-       .requestMatchers("/api/auth/register", "/api/auth/login", "/api/auth/verify","/api/admin/**","/api/employees/**","/api/employeetasks/**").permitAll()
-       .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() 
-       .anyRequest().authenticated()
-   )
-   .formLogin(form -> form.disable())
-   .cors(cors -> cors.disable());
+            .csrf(csrf -> csrf.disable()) // Disable CSRF for testing; enable it in production
+            .cors(cors -> cors.disable()) // Disable CORS for testing; configure if necessary
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/api/auth/register",
+                    "/api/auth/login",
+                    "/api/auth/profile",
+                    "/api/auth/users/{id}/",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/api/contact/**",
+                    "/api/timeoffs/**" // Ensure this matches your actual endpoints
+                ).permitAll()
+                .requestMatchers(
+                    "/api/admin/**",
+                    "/api/schedules/**",
+                    "/api/employees/**",
+                    "/api/employeetasks/**",
+                    "/api/projects/**",
+                    "/api/tasks/**",
+                    "/api/teams/**",
+                    "/api/product_manager/schedule/**",
+                    "/api/product-manager/**",
+                    "/api/timeoffrequests/**"
+                ).permitAll() // Adjust if some endpoints need authentication
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form.disable()); // Disable form login; configure if needed
     
         return http.build();
     }
-    
 }

@@ -3,14 +3,15 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class TimeOffRequest {
 
+
+public class EmployeeTimeoff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long teamLeadId;
-    private String teamLeadName;
+    private Long employeeId;
+    private String employeeName;
     private String reason;
     private String status; // e.g., "pending", "approved", "rejected"
     private LocalDate requestDate;
@@ -20,17 +21,17 @@ public class TimeOffRequest {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getTeamLeadId() {
-        return teamLeadId;
+    public Long getEmployeeId() {
+        return employeeId;
     }
-    public void setTeamLeadId(Long teamLeadId) {
-        this.teamLeadId = teamLeadId;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
-    public String getTeamLeadName() {
-        return teamLeadName;
+    public String getEmployeeName() {
+        return employeeName;
     }
-    public void setTeamLeadName(String teamLeadName) {
-        this.teamLeadName = teamLeadName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
     public String getReason() {
         return reason;
@@ -50,6 +51,5 @@ public class TimeOffRequest {
     public void setRequestDate(LocalDate requestDate) {
         this.requestDate = requestDate;
     }
-
     
 }

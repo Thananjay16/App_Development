@@ -1,6 +1,7 @@
 package com.example.backendlol.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.backendlol.backend.model.*;
+import com.example.backendlol.backend.repository.*;
 import com.example.backendlol.backend.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class AdminController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User newUser = adminService.createUser(user);
         return ResponseEntity.ok(newUser);
@@ -49,7 +50,7 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    }  
 
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Long>> getDashboardStats() {
